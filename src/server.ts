@@ -1,6 +1,6 @@
 import gracefulShutdown from "http-graceful-shutdown";
-import app from "./app";
 import { logger } from "./utils/logger";
+import app from "./app";
 
 
 const server = app.listen(process.env.PORT, async () => {
