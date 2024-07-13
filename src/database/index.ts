@@ -1,4 +1,5 @@
 import { Sequelize } from "sequelize-typescript";
+import User from "../models/User";
 
 // eslint-disable-next-line
 const dbConfig = require("../config/database");
@@ -7,7 +8,7 @@ const dbConfig = require("../config/database");
 const sequelize = new Sequelize(dbConfig);
 
 const models = [
-
+   User
 ];
 
 sequelize.addModels(models);
