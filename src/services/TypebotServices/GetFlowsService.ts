@@ -1,14 +1,7 @@
 import axios from "axios";
-import ApiToken from "../../models/ApiToken";
-import User from "../../models/User";
 
 
-
-
-
-
-
-export const GetFlowsService = async (token: string) =>{
+export const GetFlowsService = async (token: string, workspaceId: string) =>{
     const options = {
         headers: {
             'Content-Type': 'application/json',
@@ -17,8 +10,7 @@ export const GetFlowsService = async (token: string) =>{
     };
 
 
-    const response = await axios.get(`${process.env.BUILDER_URL}/api/v1/typebots`,options)
-    console.log("response", response.data)
+    const response = await axios.get(`${process.env.BUILDER_URL}/api/v1/typebots?workspaceId=${workspaceId}`,options)
     return response.data;
 
 }
