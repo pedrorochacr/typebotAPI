@@ -3,14 +3,19 @@ import { Request, Response } from "express";
 import axios from "axios";
 import { CreateUserService } from "../services/TypebotServices/CreateUserService";
 import { v4 as uuidv4 } from "uuid";
+import { CreateUserTokenService } from "../services/TypebotServices/CreateTokenService";
+import { CreateWorkspaceService } from "../services/TypebotServices/CreateWorkspaceService";
+import { CreateWorkspaceMemberService } from "../services/TypebotServices/CreateWorkspaceMemberService";
+import { RequestUserTokenService } from "../services/TypebotServices/RequestUserTokenService";
 
 export const getUserFlows = async (req: Request, res: Response): Promise<Response> => {
-  const { whatsappName } = req.params ;
+  const tokenData = req.body;
 
 
-  const { typebot, enabled, delay_message} = await ShowTypebotService(whatsappName);
+  const token = await RequestUserTokenService(tokenData);
 
-  return res.json({ typebot, enabled, delay_message});
+
+  return res.json(token);
 };
 
 export const storeUser = async (req: Request, res: Response): Promise<Response> => {
@@ -19,9 +24,37 @@ export const storeUser = async (req: Request, res: Response): Promise<Response> 
   console.log(userData);
   const userId = uuidv4();
   userData.id = userId;
+  
+  const typebotUser = await CreateUserService(userData);
+  const tokenData ={
+     id: uuidv4(),
+     token: uuidv4(),
+     name: "Default",
+     ownerId: userId
 
+  }
 
-  const typebotUser = await CreateUserService(userData)
+  const token = await CreateUserTokenService(tokenData);
+
+  const workspaceData = {
+     id:uuidv4(),
+     name: 'My workspace',
+     plan: 'UNLIMITED',
+     isQuarantined: false,
+     isSuspended:false,
+     isPastDue:false,    
+     additionalChatsIndex:0,
+     additionalStorageIndex:0,
+  }
+
+  const workspace = await CreateWorkspaceService(workspaceData);
+
+  const memberData ={ 
+     userId,
+     workspaceId: workspace.id,
+     role: "ADMIN"
+  }
+  const memberWorkspace =  CreateWorkspaceMemberService(memberData);
 
   return res.json(typebotUser);
 };

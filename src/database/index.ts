@@ -1,5 +1,8 @@
 import { Sequelize } from "sequelize-typescript";
 import User from "../models/User";
+import ApiToken from "../models/ApiToken";
+import Workspace from "../models/Workspace";
+import WorkspaceMember from "../models/WorkspaceMember";
 
 // eslint-disable-next-line
 const dbConfig = require("../config/database");
@@ -8,7 +11,10 @@ const dbConfig = require("../config/database");
 const sequelize = new Sequelize(dbConfig);
 
 const models = [
-   User
+   User,
+   ApiToken,
+   Workspace,
+   WorkspaceMember
 ];
 
 sequelize.addModels(models);
