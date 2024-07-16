@@ -7,13 +7,14 @@ import { CreateUserTokenService } from "../services/TypebotServices/CreateTokenS
 import { CreateWorkspaceService } from "../services/TypebotServices/CreateWorkspaceService";
 import { CreateWorkspaceMemberService } from "../services/TypebotServices/CreateWorkspaceMemberService";
 import { RequestUserTokenService } from "../services/TypebotServices/RequestUserTokenService";
+import { GetFlowsService } from "../services/TypebotServices/GetFlowsService";
 
 export const getUserFlows = async (req: Request, res: Response): Promise<Response> => {
   const tokenData = req.body;
 
 
   const token = await RequestUserTokenService(tokenData);
-
+ const flows = await GetFlowsService(token);
 
   return res.json(token);
 };
