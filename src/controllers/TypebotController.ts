@@ -14,7 +14,7 @@ export const getUserFlows = async (req: Request, res: Response): Promise<Respons
 
 
   const {token, workspaceId} = await RequestUserTokenService(tokenData);
- const flows = await GetFlowsService(token, workspaceId);
+  const flows = await GetFlowsService(token, workspaceId);
 
   return res.json(flows);
 };
