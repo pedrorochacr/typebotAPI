@@ -16,9 +16,11 @@ export const RequestUserTokenService = async (data: RequestData) =>{
     console.log(user);
     const userToken = await ApiToken.findOne({where: {ownerId: user.id, name: data.tokenName}});
     const workspace = await WorkspaceMember.findOne({where:{userId: user.id}});
+    console.log("userId", user.id)
     console.log("userToken",userToken);
     const { token } = userToken;
-    const workspaceId =workspace.id;
+    console.log(workspace)
+    const {workspaceId} =workspace;
     console.log(workspaceId);
     return {token,workspaceId };
 
