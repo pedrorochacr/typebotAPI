@@ -18,11 +18,11 @@ export const RequestUserTokenService = async (data: RequestData) =>{
     const workspace = await WorkspaceMember.findOne({where:{userId: user.id}});
     console.log("userId", user.id)
     console.log("userToken",userToken);
-    const { token } = userToken;
+    // const { token } = userToken;
     console.log(workspace)
     const {workspaceId} =workspace;
     console.log(workspaceId);
-    return {token,workspaceId };
+    return {workspaceId };
 
 
 }
