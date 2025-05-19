@@ -1,19 +1,16 @@
 import axios from "axios";
 import Typebot from "../../models/Typebot";
+import { Op } from "sequelize";
 
 
-export const GetFlowsService = async (token: string, workspaceId: string) =>{
-    // const options = {
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `Bearer ${token}`
-    //     }
-    // };
-
+export const GetFlowsService = async ( workspaceId: string) =>{
 
     const flows = await Typebot.findAll({
         where:{
-            workspaceId
+            workspaceId,
+            publicId: {
+            [Op.not]: null,
+            },
         }
     })
     // const response = await axios.get(`${process.env.BUILDER_URL}/api/v1/typebots?workspaceId=${workspaceId}`,options);

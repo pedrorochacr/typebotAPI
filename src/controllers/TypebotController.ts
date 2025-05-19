@@ -11,11 +11,10 @@ import { GetFlowsService } from "../services/TypebotServices/GetFlowsService";
 
 export const getUserFlows = async (req: Request, res: Response): Promise<Response> => {
   const tokenData = req.body;
-
-
-  const token = "tesste"
+  
   const { workspaceId} = await RequestUserTokenService(tokenData);
-  const flows = await GetFlowsService(token, workspaceId);
+  console.log("workspaceId", workspaceId);
+  const flows = await GetFlowsService(workspaceId);
 
   return res.json(flows);
 };
