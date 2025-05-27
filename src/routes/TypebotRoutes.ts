@@ -6,6 +6,6 @@ const typebotRoutes = express.Router();
 
 typebotRoutes.post("/typebot/flow", TypebotController.getUserFlows);
 typebotRoutes.post("/typebot/createUser", TypebotController.storeUser);
-
+typebotRoutes.put("/typebot/user", TypebotController.updateEmail);
 
 export default typebotRoutes;

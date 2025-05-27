@@ -8,6 +8,7 @@ import { CreateWorkspaceService } from "../services/TypebotServices/CreateWorksp
 import { CreateWorkspaceMemberService } from "../services/TypebotServices/CreateWorkspaceMemberService";
 import { RequestUserTokenService } from "../services/TypebotServices/RequestUserTokenService";
 import { GetFlowsService } from "../services/TypebotServices/GetFlowsService";
+import { UpdateUserEmailService } from "../services/TypebotServices/UpdateUserEmailService";
 
 export const getUserFlows = async (req: Request, res: Response): Promise<Response> => {
   const tokenData = req.body;
@@ -17,6 +18,13 @@ export const getUserFlows = async (req: Request, res: Response): Promise<Respons
   const flows = await GetFlowsService(workspaceId);
 
   return res.json(flows);
+};
+export const updateEmail = async (req: Request, res: Response): Promise<Response> => {
+  const {oldEmail, newEmail} = req.body;
+  
+  const newUser =  await UpdateUserEmailService(oldEmail, newEmail);
+
+  return res.json(newUser);
 };
 
 export const storeUser = async (req: Request, res: Response): Promise<Response> => {
