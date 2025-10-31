@@ -11,9 +11,9 @@ interface Token{
 
 export const CreateUserTokenService = async (data: Token) =>{
 
-    const token = ApiToken.create(data);
+    const apiToken = await ApiToken.create(data);
 
-    return token;
+    return apiToken.token;
 
 
 }

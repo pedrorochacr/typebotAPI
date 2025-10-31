@@ -14,7 +14,6 @@ export const GetFlowsService = async ( workspaceId: string) =>{
         }
     })
     // const response = await axios.get(`${process.env.BUILDER_URL}/api/v1/typebots?workspaceId=${workspaceId}`,options);
-    console.log("response", flows)
     return flows;
 
 }

@@ -6,15 +6,24 @@ import { v4 as uuidv4 } from "uuid";
 import { CreateUserTokenService } from "../services/TypebotServices/CreateTokenService";
 import { CreateWorkspaceService } from "../services/TypebotServices/CreateWorkspaceService";
 import { CreateWorkspaceMemberService } from "../services/TypebotServices/CreateWorkspaceMemberService";
-import { RequestUserTokenService } from "../services/TypebotServices/RequestUserTokenService";
 import { GetFlowsService } from "../services/TypebotServices/GetFlowsService";
 import { UpdateUserEmailService } from "../services/TypebotServices/UpdateUserEmailService";
+import { FindOrCreateUserTokenService } from "../services/TypebotServices/FindOrCreateUserToken";
+import { FindUserWorkspaceService } from "../services/TypebotServices/FindUserWorkspaceService";
+
+
+export const token = async (req: Request, res: Response): Promise<Response> => {
+  const { email } = req.body;
+  
+  const token = await FindOrCreateUserTokenService(email);
+
+  return res.json(token);
+};
 
 export const getUserFlows = async (req: Request, res: Response): Promise<Response> => {
   const tokenData = req.body;
   
-  const { workspaceId} = await RequestUserTokenService(tokenData);
-  console.log("workspaceId", workspaceId);
+  const { workspaceId} = await FindUserWorkspaceService(tokenData);
   const flows = await GetFlowsService(workspaceId);
 
   return res.json(flows);
@@ -30,7 +39,6 @@ export const updateEmail = async (req: Request, res: Response): Promise<Response
 export const storeUser = async (req: Request, res: Response): Promise<Response> => {
   const userData = req.body;
 
-  console.log(userData);
   const userId = uuidv4();
   userData.id = userId;
   
